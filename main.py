@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 import time
 
 service = Service("C:/Program Files (x86)/Google/Chrome/chromedriver.exe")
@@ -17,28 +16,29 @@ def upgrades():
     store = driver.find_elements(By.CSS_SELECTOR, "#store b")
     price_dict = {}
     for price in store:
-        price_split = price.text.split(" - ")
-        price_dict[price_split[0]] = int(price_split[1])
+        price = price.text
+        if price != "":
+            price_split = price.split(" - ")
+            price_dict[price_split[0]] = int(price_split[1].replace(",", ""))
 
-    affordable_upgrades = {}
-    for item in price_dict:
-        pass
+    cookies = int(driver.find_element(By.CSS_SELECTOR, "#money").text)
+
+    for item in reversed(price_dict):
+        if cookies > price_dict[item]:
+            buy_item = driver.find_element(By.ID, f"buy{item}")
+            buy_item.click()
+            break
+
 
 def autoclick():
-    timer = time.time() + 5
+    timer = time.time() + 1
     while timer >= time.time():
         cookie = driver.find_element(By.CSS_SELECTOR, "#cookie")
+        time.sleep(0.01)
         cookie.click()
 
 
 run = True
 while run:
-    #
-    # cps = driver.find_element(By.CSS_SELECTOR, "#cps")
-    # cps_text = cps.text.split(": ")
-    # cookies_per_second = float(cps_text[1])
-
+    autoclick()
     upgrades()
-    time.sleep(5)
-
-driver.quit()
