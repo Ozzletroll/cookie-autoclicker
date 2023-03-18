@@ -21,7 +21,7 @@ def upgrades():
             price_split = price.split(" - ")
             price_dict[price_split[0]] = int(price_split[1].replace(",", ""))
 
-    cookies = int(driver.find_element(By.CSS_SELECTOR, "#money").text)
+    cookies = int(driver.find_element(By.CSS_SELECTOR, "#money").text.replace(",", ""))
 
     for item in reversed(price_dict):
         if cookies > price_dict[item]:
@@ -31,14 +31,17 @@ def upgrades():
 
 
 def autoclick():
-    timer = time.time() + 1
+    timer = time.time() + 5
     while timer >= time.time():
         cookie = driver.find_element(By.CSS_SELECTOR, "#cookie")
-        time.sleep(0.01)
+        time.sleep(0.0001)
         cookie.click()
 
 
-run = True
-while run:
+run_timer = time.time() + 300
+while run_timer >= time.time():
     autoclick()
     upgrades()
+
+cookies_per_second = driver.find_element(By.CSS_SELECTOR, "#cps")
+print(cookies_per_second.text)
