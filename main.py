@@ -23,15 +23,30 @@ while run:
     cookie = driver.find_element(By.CSS_SELECTOR, "#cookie")
     cookie.click()
 
+    # Upgrade cost check
+    time_machine_cost = driver.find_element(By.CSS_SELECTOR, "#buyTime\ machine > b")
+    time_machine_cost_formatted = int(time_machine_cost.text.split(" - ")[1].replace(",", ""))
+
+    portal_cost = driver.find_element(By.CSS_SELECTOR, "#buyPortal > b")
+    portal_cost_formatted = int(portal_cost.text.split(" - ")[1].replace(",", ""))
+
+    alchemy_cost = driver.find_element(By.CSS_SELECTOR, "#buyAlchemy\ lab > b")
+    alchemy_cost_formatted = int(alchemy_cost.text.split(" - ")[1].replace(",", ""))
+
+    shipment_cost = driver.find_element(By.CSS_SELECTOR, "#buyShipment > b")
+    shipment_cost_formatted = int(shipment_cost.text.split(" - ")[1].replace(",", ""))
+
+    mine_cost = driver.find_element(By.CSS_SELECTOR, "#buyMine > b")
+    mine_cost_formatted = int(mine_cost.text.split(" - ")[1].replace(",", ""))
+
+    factory_cost = driver.find_element(By.CSS_SELECTOR, "#buyFactory > b")
+    factory_cost_formatted = int(factory_cost.text.split(" - ")[1].replace(",", ""))
+
+    grandma_cost = driver.find_element(By.CSS_SELECTOR, "#buyGrandma > b")
+    grandma_cost_formatted = int(grandma_cost.text.split(" - ")[1].replace(",", ""))
+
+    cursor_cost = driver.find_element(By.CSS_SELECTOR, "#buyCursor > b")
+    cursor_cost_formatted = int(cursor_cost.text.split(" - ")[1].replace(",", ""))
 
 
-
-
-
-
-
-
-
-
-
-driver.quit()
+# driver.quit()
