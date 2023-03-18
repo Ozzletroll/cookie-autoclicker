@@ -3,6 +3,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+import threading
+import time
 
 service = Service("C:/Program Files (x86)/Google/Chrome/chromedriver.exe")
 options = ChromeOptions()
@@ -11,18 +13,8 @@ driver = webdriver.Chrome(service=service, options=options)
 
 driver.get("http://orteil.dashnet.org/experiments/cookie/")
 
-run = True
-while run:
-    cookies_total = driver.find_element(By.CSS_SELECTOR, "#money")
-    cookies = int(cookies_total.text)
-    cps = driver.find_element(By.CSS_SELECTOR, "#cps")
-    cps_text = cps.text.split(": ")
-    cookies_per_second = float(cps_text[1])
 
-    # Cookie autoclick
-    cookie = driver.find_element(By.CSS_SELECTOR, "#cookie")
-    cookie.click()
-
+def check_upgrades():
     # Upgrade cost check
     time_machine_cost = driver.find_element(By.CSS_SELECTOR, "#buyTime\ machine > b")
     time_machine_cost_formatted = int(time_machine_cost.text.split(" - ")[1].replace(",", ""))
@@ -64,6 +56,9 @@ while run:
     elif cookies > mine_cost_formatted:
         mine_buy = driver.find_element((By.CSS_SELECTOR, "#buyMine > b"))
         mine_buy.click()
+    elif cookies > factory_cost_formatted:
+        factory_buy = driver.find_element((By.CSS_SELECTOR, "#buyFactory"))
+        factory_buy.click()
     elif cookies > grandma_cost_formatted:
         grandma_buy = driver.find_element((By.CSS_SELECTOR, "#buyGrandma"))
         grandma_buy.click()
@@ -71,5 +66,23 @@ while run:
         cursor_buy = driver.find_element(By.CSS_SELECTOR, "#buyCursor")
         cursor_buy.click()
 
+
+def autoclick():
+    timer = time.time() + 5
+    while timer >= time.time():
+        cookie = driver.find_element(By.CSS_SELECTOR, "#cookie")
+        cookie.click()
+
+
+run = True
+while run:
+    cookies_total = driver.find_element(By.CSS_SELECTOR, "#money")
+    cookies = int(cookies_total.text)
+    cps = driver.find_element(By.CSS_SELECTOR, "#cps")
+    cps_text = cps.text.split(": ")
+    cookies_per_second = float(cps_text[1])
+
+    autoclick()
+    check_upgrades()
 
 # driver.quit()
