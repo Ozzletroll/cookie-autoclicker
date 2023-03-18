@@ -48,5 +48,28 @@ while run:
     cursor_cost = driver.find_element(By.CSS_SELECTOR, "#buyCursor > b")
     cursor_cost_formatted = int(cursor_cost.text.split(" - ")[1].replace(",", ""))
 
+    # Check if player can afford upgrades
+    if cookies > time_machine_cost_formatted:
+        time_buy = driver.find_element(By.CSS_SELECTOR, "#buyTime\ machine")
+        time_buy.click()
+    elif cookies > portal_cost_formatted:
+        portal_buy = driver.find_element(By.CSS_SELECTOR, "#buyPortal > b")
+        portal_buy.click()
+    elif cookies > alchemy_cost_formatted:
+        alchemy_buy = driver.find_element(By.CSS_SELECTOR, "#buyAlchemy\ lab")
+        alchemy_buy.click()
+    elif cookies > shipment_cost_formatted:
+        shipment_buy = driver.find_element(By.CSS_SELECTOR, "#buyShipment")
+        shipment_buy.click()
+    elif cookies > mine_cost_formatted:
+        mine_buy = driver.find_element((By.CSS_SELECTOR, "#buyMine > b"))
+        mine_buy.click()
+    elif cookies > grandma_cost_formatted:
+        grandma_buy = driver.find_element((By.CSS_SELECTOR, "#buyGrandma"))
+        grandma_buy.click()
+    elif cookies > cursor_cost_formatted:
+        cursor_buy = driver.find_element(By.CSS_SELECTOR, "#buyCursor")
+        cursor_buy.click()
+
 
 # driver.quit()
